@@ -23,7 +23,8 @@
 
 ##### logstash配置文件
 
-	* logstash_input.conf		
+	* logstash_input.conf
+
         * bootstrap_servers	        请根据region列表进行选取
 	* topics		        请修改为MQ控制台上申请的Topic
 	* group_id		        请修改为MQ控制台申请的CID
