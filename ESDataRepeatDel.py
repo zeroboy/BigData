@@ -9,8 +9,8 @@ from elasticsearch import Elasticsearch
 
 class DataRepeatDel:
     def __init__(self, field, stime, etime):
-        self.index = "gamelog-20104-boluanaly"
-        self.es_url = "http://10.0.0.232:9200"
+        self.index = "log-1"
+        self.es_url = "http://0.0.0.0:9200"
         self.es = Elasticsearch(self.es_url)
         self.field = field
         self.aggname = self.field+"_get"
