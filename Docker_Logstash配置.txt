@@ -1,0 +1,101 @@
+安装docker
+    yum -y install docker
+
+启动docker
+    service docker start
+
+安装docker-logstash镜像
+
+    docker pull docker.elastic.co/logstash/logstash:5.6.5
+
+创建一个对应镜像的引用
+    
+    docker tag docker.elastic.co/logstash/logstash:5.6.5 centos7.0/253.228/test
+
+
+创建一个新镜像
+    
+    编写镜像配置
+        
+        vim ./Dockerfile
+            
+            FROM docker.elastic.co/logstash/logstash:5.6.5
+            #删除源镜像默认配置
+            RUN rm -f /usr/share/logstash/pipeline/logstash.conf
+            #配置目录覆盖
+            ADD config/pipeline/ /usr/share/logstash/pipeline/
+
+
+            # 挂载/logstash目录
+            VOLUME ["/tmp/test"]
+
+    构建镜像
+
+        docker build -t "centos7.0/253.228/test" .
+
+
+启动镜像
+
+    docker run -it -v /tmp/test/:/tmp/test/ centos7.0/253.228/test
+
+    -v 宿主机目录:镜像主机目录
+
+
+
+
+
+查看docker全部容器
+
+    docker ps -a 
+
+删除全部容器
+
+    docker rm `docker ps -a -q`
+
+关闭全部已开启容器
+
+    docker stop `docker ps -a -q`
+
+强制删除docker镜像(非强制状态下必须先删除完全部的镜像下对应的容器才能删除镜像)
+
+    docker rmi -f centos7.0/253.228/test
+
+
+
+镜像修改
+    
+    1.开启一个容器
+    docker start  容器id
+     2. 进入修改
+    docker exec -ti 99ae08d65a4d /bin/bash
+     3. 提交修改
+    docker commit -m ="update2" 容器id centos7.0/253.228/test 
+
+
+
+logstash 相关
+
+    配置
+        新建镜像时注意Dokerfile的配置
+        默认情况下logstash读取/usr/share/logstash/pipeline/logstash.conf为配置文件
+        所以需要设置删除
+        RUN rm -f /usr/share/logstash/pipeline/logstash.conf
+
+        并添加指定宿主机自定义配置
+        ADD config/pipeline/ /usr/share/logstash/pipeline/
+
+        关于xpack
+             
+            官方默认配置
+            xpack.monitoring.elasticsearch.url: http://elasticsearch:9200
+            xpack.monitoring.elasticsearch.username: logstash_system
+            xpack.monitoring.elasticsearch.password: changeme
+
+            关闭xpack监听
+            xpack.monitoring.enabled: false
+
+
+
+    启动
+        docker run -it -v /tmp/test/:/tmp/test/ centos7.0/253.228/test
+    
