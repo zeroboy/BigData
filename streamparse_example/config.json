@@ -1,0 +1,22 @@
+{
+    "serializer": "json",
+    "topology_specs": "topologies/",
+    "virtualenv_specs": "virtualenvs/",
+    "envs": {
+        "prod": {
+            "user": "root",
+            "ssh_password": "123456",
+            "nimbus": "localhost",
+            "workers": ["0.0.0.0"],
+            "log": {
+                "path": "/var/log/storm/streamparse",
+                "file": "pystorm_formal_{topology_name}_{component_name}.log",
+                "max_bytes": 104857600,
+                "backup_count": 10,
+                "level": "info"
+            },
+            "virtualenv_root": "/root/boluanalyDataSource/virtualenvs/"
+        }
+    }
+}
+
