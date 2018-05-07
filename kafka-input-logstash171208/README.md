@@ -25,11 +25,11 @@
 
 	* logstash_input.conf
 
-        * bootstrap_servers	        请根据region列表进行选取
+	* bootstrap_servers	        请根据region列表进行选取
 	* topics		        请修改为MQ控制台上申请的Topic
 	* group_id		        请修改为MQ控制台申请的CID
 	* security_protocol	        SASL_SSL，无需修改
 	* sasl_mechanism		ONS，无需修改
 	* jaas_path		        请修改成agent/jaas.conf的存放位置
 	* ssl_truststore_location	请修改成agent/kafka.client.truststore.jks存放的位置
-        * ssl_truststore_password	KafkaOnsClient，无需修改
+	* ssl_truststore_password	KafkaOnsClient，无需修改
